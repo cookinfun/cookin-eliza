@@ -1,0 +1,73 @@
+{
+  "name": "@cookinfun/plugin-cookin",
+  "version": "0.1.0",
+  "description": "ElizaOS plugin for the Cookin API: Solana and Pump.fun token intelligence, paid per call in USDC over x402 or with a Cookin Pro key.",
+  "license": "MIT",
+  "author": "cookin.fun",
+  "homepage": "https://cookin.fun/api/x402",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cookinfun/cookin-eliza.git"
+  },
+  "keywords": [
+    "elizaos",
+    "eliza-plugin",
+    "x402",
+    "solana",
+    "pumpfun",
+    "memecoin",
+    "bundle-detection",
+    "ai-agents"
+  ],
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx --test test/*.test.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@scure/base": "^2.4.0",
+    "@solana/kit": "^8.4.0",
+    "@x402/fetch": "^2.28.0",
+    "@x402/svm": "^2.28.0"
+  },
+  "peerDependencies": {
+    "@elizaos/core": ">=1.7.0"
+  },
+  "devDependencies": {
+    "@elizaos/core": "^1.7.2",
+    "@types/node": "^22.13.4",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.0"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "COOKIN_API_KEY": {
+        "type": "string",
+        "description": "Cookin Pro API key. Alternative to paying per call. Mint one at https://cookin.fun/account/api-keys",
+        "required": false,
+        "sensitive": true
+      },
+      "SOLANA_KEY": {
+        "type": "string",
+        "description": "Base58 Solana keypair holding USDC, to pay per call with x402. Stays on this machine; only a signed transaction leaves it.",
+        "required": false,
+        "sensitive": true
+      },
+      "COOKIN_MAX_PAYMENT": {
+        "type": "string",
+        "description": "Most one call may pay, for example $0.05. Defaults to $0.05.",
+        "required": false,
+        "sensitive": false
+      }
+    }
+  }
+}
